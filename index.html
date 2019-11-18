@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Rock Paper Scissors Shoot!</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/javascript/rps.js"></script>
+
+
+</head>
+
+<body>
+    <h1>Rock, Paper, or Scissors? Only one will decide</h1>
+    <hr>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Player 1</h3>
+                <hr>
+            </div>
+            <div class="col-md-4">
+
+            </div>
+            <div class="col-md-4">
+                <h3>Player 2</h3>
+                <hr>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4" id="p1">
+                <h5>Select your choice!</h5>
+                <div id="buttons">
+                    <button type="button" class="btn btn-primary option1" choice="rock">Rock</button>
+
+                    <button type="button" class="btn btn-primary option1" choice="paper">Paper</button>
+
+                    <button type="button" class="btn btn-primary option1" choice="scissors">Scissors</button>
+                </div>
+                <br>
+                <p>You have chosen:</p>
+                <img src="" id="p1-choice" width="200px">
+            </div>
+            <div class="col-md-4" id="win">
+                <p id="winner"></p>
+                <img src="" id="winning-img" width="200px">
+
+                <br>
+                <h5>Score!</h5>
+                <div class="p1-score"></div>
+                <div class="p2-score"></div>
+                <div class="ties"></div>
+            </div>
+            <div class="col-md-4" id="p2">
+                <h5>Select your choice!</h5>
+                <div id="buttons">
+                    <button type="button" class="btn btn-primary option2" choice="rock">Rock</button>
+
+                    <button type="button" class="btn btn-primary option2" choice="paper">Paper</button>
+
+                    <button type="button" class="btn btn-primary option2" choice="scissors">Scissors</button>
+                </div>
+                <br>
+                <p>You have chosen:</p>
+                <img src="" id="p2-choice" width="200px">
+            </div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-md-4" id="p1s">
+                <!-- Form input -->
+                <form id="topic-form">
+                    <label for="p1-smack">Talk some smack!!!</label>
+                    <textarea class="form-control" id="p1-smack" rows="2"></textarea>
+                    <br>
+                    <!-- Button triggers new NBA player to be added -->
+                    <button type="submit" class="btn btn-primary" id="add-smack1">Submit</button>
+
+                </form>
+            </div>
+            <div class="col-md-4">
+                <h3>Smack Talk!!!</h3>
+                <!-- append smack talk here -->
+                <div id="smack-talk"></div>
+            </div>
+            <div class="col-md-4" id="p2s">
+                <!-- Form input -->
+                <form id="topic-form">
+                    <label for="smack-input">Talk some smack!!!</label>
+                    <textarea class="form-control" id="p2-smack" rows="2"></textarea>
+                    <br>
+                    <!-- Button triggers new NBA player to be added -->
+                    <button type="submit" class="btn btn-primary" id="add-smack2">Submit</button>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>

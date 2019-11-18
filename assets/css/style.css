@@ -1,0 +1,33 @@
+h1, h3, h5, p {
+    text-align: center;
+}
+
+#buttons {
+    text-align: center;
+}
+
+.p1-score, .p2-score, .ties {
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#p1, #p2, #win, #p1s, #p2s {
+    text-align: center;
+}
+
+#winner, #winning-img {
+    font-size: 28px !important;
+    font-weight: bold;
+    padding-bottom: 5px;
+}
+
+.p1-ST {
+    margin-bottom: 0;
+    text-align: left;
+}
+
+.p2-ST {
+    margin-bottom: 0;
+    text-align: right;
+}
