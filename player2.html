@@ -15,7 +15,7 @@
     <script src="https://www.gstatic.com/firebasejs/6.0.4/firebase-database.js"></script>
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!-- <script type="text/javascript" src="assets/javascript/rps.js"></script> -->
+    <script type="text/javascript" src="assets/javascript/rps.js"></script>
 
 
 </head>
@@ -39,17 +39,12 @@
         </div>
         <div class="row">
             <div class="col-md-4" id="p1">
-                <h5>Select your choice!</h5>
-                <div id="buttons">
-                    <button type="button" class="btn btn-primary option1" choice="rock">Rock</button>
-
-                    <button type="button" class="btn btn-primary option1" choice="paper">Paper</button>
-
-                    <button type="button" class="btn btn-primary option1" choice="scissors">Scissors</button>
-                </div>
+                <p id="waiting-1">Waiting for Player 1....</p>
                 <br>
-                <p>You have chosen:</p>
-                <img src="" id="p1-choice" width="200px">
+                <p id="selecting-1">Player 1 is selecting...</p>
+                <br>
+                <p id="p1-choice-1">Player 1 has chosen: </p>
+                <img src="" id="p1-choice-image" width="200px">
             </div>
             <div class="col-md-4" id="win">
                 <p id="winner"></p>
@@ -72,25 +67,15 @@
                 </div>
                 <br>
                 <p>You have chosen:</p>
-                <img src="" id="p2-choice" width="200px">
+                <img src="" id="p2-choice-image" width="200px">
             </div>
         </div>
         <br>
         <hr>
         <br>
         <div class="row">
-            <div class="col-md-4" id="p1s">
-                <!-- Form input -->
-                <form id="topic-form">
-                    <label for="p1-smack">Talk some smack!!!</label>
-                    <textarea class="form-control" id="p1-smack" rows="2"></textarea>
-                    <br>
-                    <!-- Button triggers new NBA player to be added -->
-                    <button type="submit" class="btn btn-primary" id="add-smack1">Submit</button>
-
-                </form>
-            </div>
-            <div class="col-md-4">
+            
+            <div class="col-md-8">
                 <h3>Smack Talk!!!</h3>
                 <!-- append smack talk here -->
                 <div id="smack-talk"></div>

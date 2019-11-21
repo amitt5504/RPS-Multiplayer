@@ -5,6 +5,8 @@ var p1Choice = "";
 var p2Choice = "";
 var p1Flag = false;
 var p2Flag = false;
+var gameover = false;
+var ST = [""];
 
 var firebaseConfig = {
     apiKey: "AIzaSyAfjcuATk4gfY2wVac4Wi_LuMMFVNfuv9g",
@@ -20,32 +22,75 @@ firebase.initializeApp(firebaseConfig);
 
 var database = firebase.database();
 
+var player1Active = false;
+var player2Active = false;
 
+database.ref().update({
+    p1Score: p1Score,
+    p2Score: p2Score,
+    ties: ties,
+    p1Flag: p1Flag,
+    p2Flag: p2Flag,
+    p1Choice: p1Choice,
+    p2Choice: p2Choice,
+    ST: ST
+});
+
+$(document).on("click", ".player", characterSelect);
 $(document).on("click", ".option1", getChoiceP1);
 $(document).on("click", ".option2", getChoiceP2);
 $(document).on("click", "#add-smack1", p1Smack);
 $(document).on("click", "#add-smack2", p2Smack);
 
 
+
+function characterSelect() {
+    // event.preventDefault();
+    var character = $(this).attr("id");
+    console.log(this);
+
+    if (character === "cap") {
+        player1Active = true;
+    } else {
+        player2Active = true;
+    }
+
+    database.ref().update({
+        player1Active: player1Active,
+        player2Active: player2Active,
+
+    });
+}
+
 function getChoiceP1(event) {
     // Don't refresh the page!
     event.preventDefault();
 
     p1Choice = $(this).attr("choice");
-    console.log(p1Choice);
+    //console.log(p1Choice);
     if (p1Choice == "rock") {
-        $("#p1-choice").attr("src", "./assets/images/rock.png");
+        $("#p1-choice-image").attr("src", "./assets/images/rock.png");
     }
     if (p1Choice == "paper") {
-        $("#p1-choice").attr("src", "./assets/images/paper.png");
+        $("#p1-choice-image").attr("src", "./assets/images/paper.png");
     }
     if (p1Choice == "scissors") {
-        $("#p1-choice").attr("src", "./assets/images/scissors.png");
+        $("#p1-choice-image").attr("src", "./assets/images/scissors.png");
     }
     p1Flag = true;
-    if (p2Flag == true) {
-        checkChoice();
-    }
+
+    database.ref().update({
+        p1Choice: p1Choice,
+        p1Flag: p1Flag
+    });
+    database.ref().on("value", function (snapshot) {
+        var player2Flag = snapshot.val().p2Flag;
+        //console.log(player2Flag);
+
+        if (player2Flag === true) {
+            setTimeout(checkChoice, 3000);
+        }
+    });
 
 };
 
@@ -54,102 +99,151 @@ function getChoiceP2(event) {
     event.preventDefault();
 
     p2Choice = $(this).attr("choice");
-    console.log(p2Choice);
+    //console.log(p2Choice);
     if (p2Choice == "rock") {
-        $("#p2-choice").attr("src", "./assets/images/rock.png");
+        $("#p2-choice-image").attr("src", "./assets/images/rock.png");
     }
     if (p2Choice == "paper") {
-        $("#p2-choice").attr("src", "./assets/images/paper.png");
+        $("#p2-choice-image").attr("src", "./assets/images/paper.png");
     }
     if (p2Choice == "scissors") {
-        $("#p2-choice").attr("src", "./assets/images/scissors.png");
+        $("#p2-choice-image").attr("src", "./assets/images/scissors.png");
     }
     p2Flag = true;
-    if (p1Flag == true) {
-        setTimeout(checkChoice, 3000);
-    }
+
+    database.ref().update({
+        p2Choice: p2Choice,
+        p2Flag: p2Flag
+    });
+
+    database.ref().on("value", function (snapshot) {
+        var player1Flag = snapshot.val().p1Flag;
+
+        if (player1Flag === true) {
+            setTimeout(checkChoice, 5000);
+        }
+    });
 };
 
 function checkChoice() {
-    $("#p1-choice").attr("src", "");
-    $("#p2-choice").attr("src", "");
+    console.log("me?")
+    $("#p1-choice-image").attr("src", "");
+    $("#p2-choice-image").attr("src", "");
 
-    if (p1Choice === p2Choice) {
-        ties++;
-        $("#winner").text("Tie Game?")
+    database.ref().on("value", function (snapshot) {
+        var p1 = snapshot.val().p1Choice;
+        var p2 = snapshot.val().p2Choice;
+        var p1F = snapshot.val().p1Flag;
+        var p2F = snapshot.val().p2Flag;
+        p1Score = snapshot.val().p1Score;
+        p2Score = snapshot.val().p2Score;
+        ties = snapshot.val().ties;
 
-        console.log(ties);
-        $("#winning-img").attr("src", "./assets/images/tie-game.png");
+        if (p1F == true && p2F == true) {
 
-    } else if ((p1Choice == "rock" && p2Choice == "scissors") || (p1Choice == "scissors" && p2Choice == "paper") ||
-        (p1Choice == "paper" && p2Choice == "rock")) {
-        p1Score++;
-        $("#winner").text("Player 1 wins!!!");
-        if (p1Choice == "rock") {
-            $("#winning-img").attr("src", "./assets/images/rock.png");
-        }
-        if (p1Choice == "paper") {
-            $("#winning-img").attr("src", "./assets/images/paper.png");
-        }
-        if (p1Choice == "scissors") {
-            $("#winning-img").attr("src", "./assets/images/scissors.png");
-        }
-    } else {
-        p2Score++;
-        $("#winner").text("Player 2 wins!!!")
-        if (p2Choice == "rock") {
-            $("#winning-img").attr("src", "./assets/images/rock.png");
-        }
-        if (p2Choice == "paper") {
-            $("#winning-img").attr("src", "./assets/images/paper.png");
-        }
-        if (p2Choice == "scissors") {
-            $("#winning-img").attr("src", "./assets/images/scissors.png");
-        }
-    }
 
-    database.ref().set({
+
+            if ((p1 == "rock" && p2 == "scissors") || (p1 == "scissors" && p2 == "paper") ||
+                (p1 == "paper" && p2 == "rock")) {
+                p1Score++;
+                $("#winner").text("Player 1 wins!!!");
+                if (p1 == "rock") {
+                    $("#winning-img").attr("src", "./assets/images/rock.png");
+                }
+                if (p1 == "paper") {
+                    $("#winning-img").attr("src", "./assets/images/paper.png");
+                }
+                if (p1 == "scissors") {
+                    $("#winning-img").attr("src", "./assets/images/scissors.png");
+                }
+            } else if (p1 === p2) {
+                ties++;
+                $("#winner").text("Tie Game?")
+
+                // console.log(ties);
+                $("#winning-img").attr("src", "./assets/images/tie-game.png");
+
+            } else {
+                p2Score++;
+                $("#winner").text("Player 2 wins!!!")
+                if (p2 == "rock") {
+                    $("#winning-img").attr("src", "./assets/images/rock.png");
+                }
+                if (p2 == "paper") {
+                    $("#winning-img").attr("src", "./assets/images/paper.png");
+                }
+                if (p2 == "scissors") {
+                    $("#winning-img").attr("src", "./assets/images/scissors.png");
+                }
+            }
+            gameover = true;
+            setTimeout(clearImg, 5000);
+
+        }
+    });
+
+    p1Flag = false;
+    p2Flag = false;
+    p1Choice = "";
+    p2Choice = "";
+
+
+    database.ref().update({
         p1Score: p1Score,
         p2Score: p2Score,
         ties: ties,
-    });
-    p1Flag = false;
-    p2Flag = false;
+        p1Flag: p1Flag,
+        p2Flag: p2Flag,
+        p1Choice: p1Choice,
+        p2Choice: p2Choice,
 
-    setTimeout(clearImg, 5000);
+    });
 
 };
 
 function clearImg() {
     $("#winning-img").attr("src", "");
-    $("#winner").text("")
+    $("#winner").text("");
+    gameover = false;
 }
+
 
 function p1Smack() {
     event.preventDefault();
 
     var smackTalk = $("#p1-smack").val().trim();
-    console.log(smackTalk);
     $("#p1-smack").val("");
-    var ST = $("<p>")
-    ST.addClass("p1-ST")
-    ST.text("Player 1: " + smackTalk);
-    $("#smack-talk").append(ST);
+
+    ST.push("Player 1: " + smackTalk);
+
+    database.ref().update({
+        ST: ST
+    });
+    
 };
 
 function p2Smack() {
     event.preventDefault();
 
     var smackTalk = $("#p2-smack").val().trim();
-    console.log(smackTalk);
     $("#p2-smack").val("");
-    var ST = $("<p>")
-    ST.addClass("p2-ST")
-    ST.text("Player 2: " + smackTalk);
-    $("#smack-talk").append(ST);
+
+    ST.push("Player 2: " + smackTalk);
+
+    database.ref().update({
+        ST: ST
+    });
+    
 };
 
+
+
 database.ref().on("value", function (snapshot) {
+    player1Active = snapshot.val().player1Active;
+    player2Active = snapshot.val().player2Active;
+    var player1Flag = snapshot.val().p1Flag;
+    var player2Flag = snapshot.val().p2Flag;
+
 
     p1Score = snapshot.val().p1Score;
     p2Score = snapshot.val().p2Score;
@@ -160,7 +254,36 @@ database.ref().on("value", function (snapshot) {
     $(".p2-score").text("Player 2: " + snapshot.val().p2Score);
     $(".ties").text("Ties: " + snapshot.val().ties);
 
-    // Handle the errors
+
+    if (player1Active === false) {
+        $("#selecting-1, #p1-choice-1").hide();
+    } else if (player1Active === true) {
+        $("#waiting-1, #p1-choice-1").hide();
+    } else if (player1Flag === true) {
+        $("#waiting-1, #selecting-1").hide();
+    }
+
+    if (player2Active === false) {
+        $("#selecting-2, #p1-choice-2").hide();
+    } else if (player2Active === true) {
+        $("#waiting-2, #p1-choice-2").hide();
+    } else if (player2Flag === true) {
+        $("#waiting-2, #selecting-2").hide();
+    }
+
+
+    var smackArr = snapshot.val().ST;
+    if(smackArr.length > 1)
+    {
+        for (var i = 0; i < smackArr.length; i++) {
+            var smack = $("<p>");
+            smack.addClass("ST");
+            smack.text(smackArr[i]);
+            $("#smack-talk").prepend(smack);
+        }
+    }
+
+
 }, function (errorObject) {
     console.log("Errors handled: " + errorObject.code);
 });
