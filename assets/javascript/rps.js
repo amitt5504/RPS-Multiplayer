@@ -211,29 +211,55 @@ function clearImg() {
 function p1Smack() {
     event.preventDefault();
 
-    var smackTalk = $("#p1-smack").val().trim();
-    $("#p1-smack").val("");
+    database.ref().on("value", function (snapshot) {
 
-    ST.push("Player 1: " + smackTalk);
+        ST = snapshot.val().ST;
+        console.log(ST);
+
+        var smackTalk = $("#p1-smack").val().trim();
+        $("#p1-smack").val("");
+
+        if (smackTalk != "") {
+            //$("#smack-talk").empty();
+            ST.push("Player 1: " + smackTalk);
+
+            // for (var i = 0; i < ST.length; i++) {
+
+            //     var smack = $("<p>");
+            //     smack.addClass("ST");
+            //     smack.text(ST[i]);
+            //     $("#smack-talk").prepend(smack);
+            // }
+
+        }
+    });
 
     database.ref().update({
         ST: ST
-    });
-    
+    })
 };
 
 function p2Smack() {
     event.preventDefault();
 
-    var smackTalk = $("#p2-smack").val().trim();
-    $("#p2-smack").val("");
+    database.ref().on("value", function (snapshot) {
 
-    ST.push("Player 2: " + smackTalk);
+        ST = snapshot.val().ST;
+        console.log(ST);
+
+        var smackTalk = $("#p2-smack").val().trim();
+        $("#p2-smack").val("");
+
+
+        if (smackTalk != "") {
+            ST.push("Player 2: " + smackTalk);
+        }
+    });
 
     database.ref().update({
         ST: ST
     });
-    
+
 };
 
 
@@ -241,8 +267,8 @@ function p2Smack() {
 database.ref().on("value", function (snapshot) {
     player1Active = snapshot.val().player1Active;
     player2Active = snapshot.val().player2Active;
-    var player1Flag = snapshot.val().p1Flag;
-    var player2Flag = snapshot.val().p2Flag;
+    //var player1Flag = snapshot.val().p1Flag;
+    //var player2Flag = snapshot.val().p2Flag;
 
 
     p1Score = snapshot.val().p1Score;
@@ -259,29 +285,24 @@ database.ref().on("value", function (snapshot) {
         $("#selecting-1, #p1-choice-1").hide();
     } else if (player1Active === true) {
         $("#waiting-1, #p1-choice-1").hide();
-    } else if (player1Flag === true) {
-        $("#waiting-1, #selecting-1").hide();
     }
 
     if (player2Active === false) {
         $("#selecting-2, #p1-choice-2").hide();
     } else if (player2Active === true) {
         $("#waiting-2, #p1-choice-2").hide();
-    } else if (player2Flag === true) {
-        $("#waiting-2, #selecting-2").hide();
     }
 
 
-    var smackArr = snapshot.val().ST;
-    if(smackArr.length > 1)
-    {
-        for (var i = 0; i < smackArr.length; i++) {
-            var smack = $("<p>");
-            smack.addClass("ST");
-            smack.text(smackArr[i]);
-            $("#smack-talk").prepend(smack);
-        }
+    ST = snapshot.val().ST;
+    $("#smack-talk").empty();
+    for (var i = 0; i < ST.length; i++) {
+        var smack = $("<p>");
+        smack.addClass("ST");
+        smack.text(ST[i]);
+        $("#smack-talk").prepend(smack);
     }
+
 
 
 }, function (errorObject) {
