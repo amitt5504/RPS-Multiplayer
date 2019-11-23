@@ -1,5 +1,18 @@
-h1, h3, h5, p {
+h1, h3, h5, p, h2 {
     text-align: center;
+}
+
+h1 {
+    text-shadow: 2px 2px goldenrod;
+
+}
+
+.im, .p2-score {
+    color: red;
+}
+
+.ca, .p1-score {
+    color: blue;
 }
 
 #buttons {
@@ -22,12 +35,7 @@ h1, h3, h5, p {
     padding-bottom: 5px;
 }
 
-.p1-ST {
-    margin-bottom: 0;
-    text-align: left;
+#iron-man, #cap-amer {
+    text-align: center;
 }
 
-.p2-ST {
-    margin-bottom: 0;
-    text-align: right;
-}

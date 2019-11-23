@@ -26,18 +26,19 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4">
-                <h3>Player 1</h3>
+                <h3 class="ca">Captain America</h3>
                 <hr>
             </div>
             <div class="col-md-4">
 
             </div>
             <div class="col-md-4">
-                <h3>Player 2</h3>
+                <h3 class="im">Iron Man</h3>
                 <hr>
             </div>
         </div>
         <div class="row">
+            <!-- Displays the buttons for the choices -->
             <div class="col-md-4" id="p1">
                 <h5>Select your choice!</h5>
                 <div id="buttons">
@@ -51,6 +52,7 @@
                 <p>You have chosen:</p>
                 <img src="" id="p1-choice-image" width="200px">
             </div>
+            <!-- Displays the score and the winner -->
             <div class="col-md-4" id="win">
                 <p id="winner"></p>
                 <img src="" id="winning-img" width="200px">
@@ -61,12 +63,13 @@
                 <div class="p2-score"></div>
                 <div class="ties"></div>
             </div>
+            <!-- The text displays depending on if Player 2 is active -->
             <div class="col-md-4" id="p2">
-                <p id="waiting-2">Waiting for Player 2....</p>
+                <p id="waiting-2">Waiting for Iron Man....</p>
                 <br>
-                <p id="selecting-2">Player 2 is selecting...</p>
+                <p id="selecting-2">Iron Man is selecting...</p>
                 <br>
-                <p id="p1-choice-1">Player 2 has chosen: </p>
+                <p id="p1-choice-1">Iron Man has chosen: </p>
                 <img src="" id="p2-choice-image" width="200px">
             </div>
         </div>
@@ -86,7 +89,7 @@
                 </form>
             </div>
             <div class="col-md-8">
-                <h3>Smack Talk!!!</h3>
+                <h1>Smack Talk!!!</h1>
                 <!-- append smack talk here -->
                 <div id="smack-talk"></div>
             </div>
